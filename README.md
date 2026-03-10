@@ -1,7 +1,7 @@
 # ChainRisk
 
 <p align="center">
-  <img src="docs/chainrisk-logo.png" alt="chainrisk logo" width="300">
+  <img src="ChainRisk_logo.png" alt="chainrisk logo" width="300">
 </p>
 
 <p align="center">
