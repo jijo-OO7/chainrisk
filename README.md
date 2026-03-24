@@ -12,171 +12,125 @@
   Analyze container images, dependencies, and open-source ecosystems to predict and understand software supply chain compromise risk.
 </p>
 
+# ChainRisk
+
+<p align="center">
+  <img src="ChainRisk_logo.png" alt="chainrisk logo" width="600">
+</p>
+
+<p align="center">
+  <strong>ChainRisk is a CLI tool for analyzing software supply chain risk using SBOMs.</strong>
+</p>
+
+---
+
 ## Overview
 
-ChainRisk is a modern CLI tool designed to help security teams analyze the risk landscape of software supply chains.
+ChainRisk helps developers and security engineers understand how software dependencies are connected and how risk propagates through them.
 
-Instead of only detecting known vulnerabilities, ChainRisk models dependency ecosystems, maintainer trust signals, and probabilistic risk propagation to identify dependencies most likely to cause large-scale compromise.
+Instead of focusing only on known vulnerabilities, ChainRisk analyzes dependency relationships to answer a more practical question:
 
-ChainRisk is designed for modern cloud environments built on containers and Kubernetes.
+> **If one dependency is compromised, what breaks?**
+
+---
 
 ## Why ChainRisk
 
-Modern infrastructure relies on deep dependency chains:
+Modern systems rely on deep dependency chains:
 
 ```
-Kubernetes Workload
-        ↓
-Container Image
-        ↓
-Base Image
-        ↓
-OS Libraries
-        ↓
-Application Dependencies
+Application
+   ↓
+Libraries
+   ↓
+Transitive Dependencies
 ```
 
-A compromise in a low-level dependency can propagate across many systems.
+A failure in a low-level dependency can affect multiple services.
 
-ChainRisk helps security teams understand:
+ChainRisk helps you:
 
-- which dependencies are most critical
-- which components affect the most workloads
-- which projects show suspicious maintainer activity
-- how compromise could propagate through infrastructure
+* understand dependency relationships
+* identify critical shared components
+* simulate how failures propagate
 
-## Features
+---
 
-### Container Supply Chain Analysis
+## Features (MVP)
 
-Analyze container images and their dependency trees.
+### 1. SBOM Analysis
+
+Parse SPDX/CycloneDX SBOMs to extract dependency information.
 
 ```bash
-chainrisk image ghcr.io/org/service:latest
+chainrisk sbom-info sbom.json
 ```
 
-ChainRisk inspects:
-
-- container base images
-- OS packages
-- application dependencies
-
-### Global Dependency Risk Graph
-
-ChainRisk builds a global dependency graph across container images.
-
-Example ecosystem graph:
+Example output:
 
 ```
-serviceA        serviceB        serviceC
-   |                |               |
-  grpc             grpc           grpc
-     \              |             /
-       -------- protobuf --------
-                 |
-                zlib
+Total packages: 120
+Top-level dependencies: 8
+Most used dependency: zlib
 ```
 
-This reveals ecosystem chokepoints where compromise would have the largest impact.
+---
 
-### Dependency Centrality Detection
+### 2. Dependency Graph
 
-ChainRisk calculates graph metrics such as:
+Build and visualize dependency relationships from an SBOM.
 
-- dependency centrality
-- dependency depth
-- blast radius
+```bash
+chainrisk graph sbom.json
+```
 
-These identify critical dependencies that represent systemic risk.
+Example:
 
-### Blast Radius Simulation
+```
+zlib → protobuf → grpc → service
+```
+
+This reveals how components are connected and which dependencies are reused.
+
+---
+
+### 3. Blast Radius Simulation
 
 Simulate the impact of a compromised dependency.
 
-Example:
-
-```
-zlib compromised
- ↓
-protobuf affected
- ↓
-grpc affected
- ↓
-payment-service affected
+```bash
+chainrisk simulate sbom.json --target=zlib
 ```
 
-This helps security teams understand how compromise propagates.
-
-### Maintainer Trust Drift Detection
-
-ChainRisk analyzes repository activity to detect maintainer trust drift.
-
-Indicators include:
-
-- maintainer inactivity
-- sudden contributor dominance
-- release ownership changes
-
-These signals often precede supply-chain compromise.
-
-### Probabilistic Risk Modeling
-
-ChainRisk models dependency risk using probabilistic state transitions.
+Example output:
 
 ```
-Healthy
- ↓
-Maintainer Risk
- ↓
-Vulnerable
- ↓
-Compromised
+🚨 BLAST RADIUS REPORT
+
+Compromised: zlib
+
+Affected:
+- protobuf
+- grpc
+- payment-service
+
+Impact depth: 3
+Total affected: 7 packages
 ```
 
-This allows predictive security analysis, not just reactive scanning.
-
-### Container Image Verification
-
-ChainRisk integrates with supply-chain security tooling such as:
-
-- Cosign for container signature verification
-- Syft for SBOM generation
-- SLSA provenance metadata
-
-Example pipeline:
-
-```
-Container Image
-      ↓
-Cosign verification
-      ↓
-SBOM generation
-      ↓
-Dependency graph analysis
-      ↓
-Risk intelligence report
-```
+---
 
 ## CLI Usage
 
-Example commands:
-
 ```bash
-chainrisk image <container-image>
-chainrisk dependency <package>
-chainrisk ecosystem
-chainrisk simulate
+chainrisk sbom-info <file>
+chainrisk graph <file>
+chainrisk simulate <file> --target=<dependency>
 ```
 
-Example:
-
-```bash
-chainrisk image ghcr.io/org/payment-service:latest
-```
+---
 
 ## Installation
-
-### Install from source
 
 ```bash
 git clone https://github.com/jijo-OO7/chainrisk.git
@@ -190,85 +144,19 @@ Run:
 ./chainrisk
 ```
 
-## Architecture
-
-```
-Container Image / Repository
-            ↓
-SBOM Extraction
-            ↓
-Dependency Graph
-            ↓
-Global Dependency Graph
-            ↓
-Graph Metrics
-            ↓
-Risk Signals
-            ↓
-Markov Risk Engine
-            ↓
-Risk Intelligence Report
-```
-
-## What Makes ChainRisk Unique
-
-ChainRisk differs from traditional security scanners.
-
-Most tools answer:
-
-> Does this dependency contain known vulnerabilities?
-
-ChainRisk answers:
-
-- Which dependency is most critical in the ecosystem?
-- Which dependency is most likely to be compromised?
-- If dependency X fails, which services are affected?
-- Are maintainers showing suspicious trust drift?
-
-### Key innovations:
-
-- ecosystem-level dependency graph analysis
-- probabilistic compromise prediction
-- maintainer trust drift detection
-- container-native supply-chain analysis
+---
 
 ## Roadmap
 
-Upcoming development milestones:
+Planned future improvements:
 
-- container image analysis pipeline
-- dependency graph engine
-- ecosystem indexing mode
-- probabilistic risk engine
-- Kubernetes workload scanning
+* dependency centrality scoring
+* container image analysis
+* CI/CD integration
+* risk scoring models
 
-## Contributing
-
-Contributions are welcome.
-
-Please read CONTRIBUTING.md for guidelines on reporting issues and submitting pull requests.
-
-## Security
-
-If you discover a security vulnerability in ChainRisk, please follow the responsible disclosure process described in SECURITY.md.
+---
 
 ## License
 
-ChainRisk is licensed under the Apache License 2.0.
-
-See LICENSE for details.
-
-## Author
-
-Suman Mandal  
-GitHub: https://github.com/jijo-OO7
-
-## Inspiration
-
-ChainRisk is inspired by the need for better supply-chain intelligence in modern container ecosystems.
-
-It builds on ideas from:
-
-- container security
-- dependency graph analysis
-- probabilistic risk modeling
+Licensed under the Apache License 2.0.
