@@ -5,20 +5,6 @@
 </p>
 
 <p align="center">
-  <strong>ChainRisk is a supply-chain risk intelligence CLI for container ecosystems.</strong>
-</p>
-
-<p align="center">
-  Analyze container images, dependencies, and open-source ecosystems to predict and understand software supply chain compromise risk.
-</p>
-
-# ChainRisk
-
-<p align="center">
-  <img src="ChainRisk_logo.png" alt="chainrisk logo" width="600">
-</p>
-
-<p align="center">
   <strong>ChainRisk is a CLI tool for analyzing software supply chain risk using SBOMs.</strong>
 </p>
 
