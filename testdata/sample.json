@@ -1,7 +1,19 @@
 {
   "packages": [
-    { "name": "zlib" },
-    { "name": "protobuf" },
-    { "name": "grpc" }
+    { "SPDXID": "SPDXRef-zlib", "name": "zlib" },
+    { "SPDXID": "SPDXRef-protobuf", "name": "protobuf" },
+    { "SPDXID": "SPDXRef-grpc", "name": "grpc" }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-protobuf",
+      "relatedSpdxElement": "SPDXRef-zlib",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-grpc",
+      "relatedSpdxElement": "SPDXRef-protobuf",
+      "relationshipType": "DEPENDS_ON"
+    }
   ]
 }

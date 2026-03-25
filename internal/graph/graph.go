@@ -10,38 +10,19 @@
 
 package graph
 
+import "fmt"
+
+// graph represents adjacency graph
 type Graph struct {
-	Nodes map[string]*Node
+	Adjacency map[string][]string
+	Reverse   map[string][]string
 }
 
-func NewGraph() *Graph {
-	return &Graph{
-		Nodes: make(map[string]*Node),
+// Print prints the graph
+func (g *Graph) Print() {
+	for node, neighbors := range g.Adjacency {
+		for _, n := range neighbors {
+			fmt.Printf("%s → %s\n", node, n)
+		}
 	}
-}
-
-func (g *Graph) AddNode(name, version string) *Node {
-
-	id := name + "@" + version
-
-	if node, exists := g.Nodes[id]; exists {
-		return node
-	}
-
-	node := &Node{
-		Name:    name,
-		Version: version,
-		ID:      id,
-	}
-
-	g.Nodes[id] = node
-
-	return node
-}
-
-func (g *Graph) AddDependency(from, to *Node) {
-
-	from.Dependencies = append(from.Dependencies, to)
-	to.Dependents = append(to.Dependents, from)
-
 }

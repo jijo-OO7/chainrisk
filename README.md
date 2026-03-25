@@ -14,7 +14,7 @@
 
 ChainRisk helps developers and security engineers understand how software dependencies are connected and how risk propagates through them.
 
-Instead of focusing only on known vulnerabilities, ChainRisk analyzes dependency relationships to answer a more practical question:
+Instead of focusing only on known vulnerabilities, ChainRisk answers a more practical question:
 
 > **If one dependency is compromised, what breaks?**
 
@@ -32,21 +32,21 @@ Libraries
 Transitive Dependencies
 ```
 
-A failure in a low-level dependency can affect multiple services.
+A failure in a low-level dependency can impact multiple services and systems.
 
 ChainRisk helps you:
 
 * understand dependency relationships
-* identify critical shared components
-* simulate how failures propagate
+* visualize how components are connected
+* simulate how failures propagate across systems
 
 ---
 
 ## Features (v0.1)
 
-### 1. SBOM Analysis
+### 📊 SBOM Analysis
 
-Parse SPDX/CycloneDX SBOMs to extract dependency information.
+Parse SBOM files to extract package and dependency information.
 
 ```bash
 chainrisk sbom-info <file>
@@ -61,23 +61,56 @@ chainrisk sbom-info testdata/sample.json
 Output:
 
 ```
-Total packages: 3
-- zlib
-- protobuf
-- grpc
+📊 SBOM INFO
+
+📦 Total Packages: 3
+
+🔗 Dependency Graph:
+
+  • protobuf → zlib
+  • grpc → protobuf
 ```
 
 ---
 
-### 2. Dependency Graph *(coming next)*
+### 🔗 Dependency Graph
 
-Build and visualize dependency relationships from an SBOM.
+Build a directed dependency graph from SBOM relationships.
+
+* models dependencies between components
+* identifies how packages are connected
+* forms the foundation for risk analysis
 
 ---
 
-### 3. Blast Radius Simulation *(coming next)*
+### 🚨 Blast Radius Analysis
 
 Simulate the impact of a compromised dependency.
+
+```bash
+chainrisk blast <file> --target=zlib
+```
+
+Example:
+
+```bash
+chainrisk blast testdata/sample.json --target=zlib
+```
+
+Output:
+
+```
+🚨 BLAST RADIUS
+
+🎯 Target: zlib
+
+📦 Affected Components:
+  • zlib
+  • protobuf
+  • grpc
+
+⚡ Total Impact: 3 components
+```
 
 ---
 
@@ -86,6 +119,7 @@ Simulate the impact of a compromised dependency.
 ```bash
 chainrisk version
 chainrisk sbom-info <file>
+chainrisk blast <file> --target=<dependency>
 ```
 
 ---
@@ -121,18 +155,34 @@ Run:
 ```
 cmd/chainrisk       → CLI entry point  
 internal/sbom       → SBOM parsing logic  
+internal/graph      → dependency graph construction  
 internal/cli        → command handlers  
 testdata/           → sample SBOM files  
 ```
 
 ---
 
-## Roadmap
+## Roadmap (Post v0.1)
 
-* dependency graph generation
-* blast radius simulation
+* dependency centrality detection
+* blast radius depth / levels
+* risk scoring model
 * CI/CD integration
-* risk scoring
+* support for multiple SBOM formats (SPDX, CycloneDX)
+
+---
+
+## Version
+
+**Current Version: v0.1.0**
+
+This release focuses on:
+
+* SBOM parsing
+* dependency graph construction
+* blast radius simulation
+
+Future versions will expand into deeper risk analysis and production-grade capabilities.
 
 ---
 

@@ -11,9 +11,17 @@
 package sbom
 
 type SBOM struct {
-	Packages []Package `Json:"Packages"`
+	Packages      []Package      `json:"packages"`
+	Relationships []Relationship `json:"relationships"`
 }
 
 type Package struct {
-	Name string `Json:"name"`
+	SPDXID string `json:"SPDXID"`
+	Name   string `json:"name"`
+}
+
+type Relationship struct {
+	SpdxElementID      string `json:"spdxElementId"`
+	RelatedSpdxElement string `json:"relatedSpdxElement"`
+	RelationshipType   string `json:"relationshipType"`
 }
