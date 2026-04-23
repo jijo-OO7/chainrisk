@@ -97,7 +97,7 @@ Example:
 chainrisk blast testdata/sample.json --target=zlib
 ```
 
-Output:
+### Output:
 
 ```
 🚨 BLAST RADIUS
