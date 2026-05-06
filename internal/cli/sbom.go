@@ -15,7 +15,7 @@ import (
 	"github.com/jijo-OO7/chainrisk/internal/graph"
 	"github.com/jijo-OO7/chainrisk/internal/sbom"
 )
-
+/*TO DO SPDX incorporation along with jsongold*/
 func RunSBOMInfo(file string) {
 	result, err := sbom.ParseSBOM(file)
 	if err != nil {
