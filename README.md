@@ -184,6 +184,7 @@ This release focuses on:
 
 Future versions will expand into deeper risk analysis and production-grade capabilities.
 
+** upcoming verion: v0.1.1**
 ---
 
 ## License
