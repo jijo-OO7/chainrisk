@@ -10,7 +10,7 @@
 
 ---
 
-## overview
+## Overview
 
 ChainRisk helps developers and security engineers understand how software dependencies are connected and how risk propagates through them.
 
