@@ -15,7 +15,7 @@ import (
 	"github.com/jijo-OO7/chainrisk/internal/graph"
 	"github.com/jijo-OO7/chainrisk/internal/sbom"
 )
-#blast-radius traversal and scan 
+
 func RunBlast(file string, target string) {
 	result, err := sbom.ParseSBOM(file)
 	if err != nil {
