@@ -1,7 +1,7 @@
 {
   "packages": [
     { "SPDXID": "SPDXRef-zlib", "name": "zlib" },
-    { "SPDXID": "SPDXRef-protobuf", "name": "protobuf" },
+    { "SPDXID": "SPDXRef-protobuf", "name": "protobuff" },
     { "SPDXID": "SPDXRef-grpc", "name": "grpc" }
   ],
   "relationships": [
