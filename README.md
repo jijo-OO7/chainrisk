@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>ChainRisk is a CLI tool for analyzing software supply chain risk using SBOM's.</strong>
+  <strong>ChainRisk is a CLI tool for analyzing software supply chain risk using SBOM's</strong>
 </p>
 
 ---
