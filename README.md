@@ -20,7 +20,7 @@ Instead of focusing only on known vulnerabilities, ChainRisk answers a more prac
 
 ---
 
-## Why ChainRisk
+## Why ChainRisk ?
 
 Modern systems rely on deep dependency chains:
 
